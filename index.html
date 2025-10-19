@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Learnium Explorer</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+        }
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        #vanta-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-50 font-sans">
+    <div id="vanta-bg"></div>
+    
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-6 py-8 relative z-10">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-4xl font-bold">AI Learnium Explorer 🚀</h1>
+                    <p class="mt-2 text-xl opacity-90">Learn with AI, Learn about AI</p>
+                </div>
+                <div class="hidden md:flex space-x-4">
+                    <a href="#concepts" class="px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition">Key Concepts</a>
+                    <a href="#projects" class="px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition">Projects</a>
+                    <a href="#rubric" class="px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition">Rubric</a>
+                </div>
+                <button class="md:hidden" id="mobile-menu-button">
+                    <i data-feather="menu"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-20 relative z-10">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-5xl font-bold text-gray-800 mb-6">Logic & Algorithms 2025</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-10">
+                Use AI tools to learn about artificial intelligence by creating digital products that explain key concepts clearly and creatively.
+            </p>
+            <div class="flex justify-center space-x-4">
+                <a href="#concepts" class="px-6 py-3 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700 transition">Explore Concepts</a>
+                <a href="#projects" class="px-6 py-3 border-2 border-purple-600 text-purple-600 rounded-lg hover:bg-purple-50 transition">Project Ideas</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Concepts Section -->
+    <section id="concepts" class="py-16 bg-white relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Key AI Ideas</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Concept Card 1 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-md border border-gray-100 transition duration-300">
+                    <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="cpu" class="text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Neural Networks</h3>
+                    <p class="text-gray-600 mb-4">
+                        Systems inspired by biological neural networks that learn to perform tasks by considering examples.
+                    </p>
+                    <a href="#" class="text-purple-600 font-medium hover:underline">Learn more →</a>
+                </div>
+                
+                <!-- Concept Card 2 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-md border border-gray-100 transition duration-300">
+                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="layers" class="text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Support Vector Machines</h3>
+                    <p class="text-gray-600 mb-4">
+                        Supervised learning models with associated learning algorithms that analyze data for classification and regression.
+                    </p>
+                    <a href="#" class="text-blue-600 font-medium hover:underline">Learn more →</a>
+                </div>
+                
+                <!-- Concept Card 3 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-md border border-gray-100 transition duration-300">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="brain" class="text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Philosophy of Mind</h3>
+                    <p class="text-gray-600 mb-4">
+                        The philosophical study of the nature of the mind, mental events, and consciousness.
+                    </p>
+                    <a href="#" class="text-green-600 font-medium hover:underline">Learn more →</a>
+                </div>
+                
+                <!-- Concept Card 4 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-md border border-gray-100 transition duration-300">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="shield" class="text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">AI Ethics</h3>
+                    <p class="text-gray-600 mb-4">
+                        The moral principles and techniques intended to inform the development and responsible use of AI technology.
+                    </p>
+                    <a href="#" class="text-yellow-600 font-medium hover:underline">Learn more →</a>
+                </div>
+                
+                <!-- Concept Card 5 -->
+                <div class="concept-card bg-white p-6 rounded-xl shadow-md border border-gray-100 transition duration-300">
+                    <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="activity" class="text-red-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Machine Learning</h3>
+                    <p class="text-gray-600 mb-4">
+                        Study of computer algorithms that improve automatically through experience and by the use of data.
+                    </p>
+                    <a href="#" class="text-red-600 font-medium hover:underline">Learn more →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Ideas Section -->
+    <section id="projects" class="py-16 bg-gray-50 relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Suggested Digital Products</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Project 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="smartphone" class="text-purple-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">App</h3>
+                    <p class="text-gray-600 text-sm">
+                        Create an interactive mobile application that teaches an AI concept through engaging activities.
+                    </p>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="globe" class="text-blue-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Website</h3>
+                    <p class="text-gray-600 text-sm">
+                        Design an informative website explaining your chosen AI concept with interactive elements.
+                    </p>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="mic" class="text-green-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Podcast</h3>
+                    <p class="text-gray-600 text-sm">
+                        Record a podcast episode interviewing experts or discussing applications of your AI topic.
+                    </p>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="video" class="text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Video</h3>
+                    <p class="text-gray-600 text-sm">
+                        Produce an educational video explaining your AI concept with animations and examples.
+                    </p>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="help-circle" class="text-red-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Interactive Quiz</h3>
+                    <p class="text-gray-600 text-sm">
+                        Develop a quiz or game that tests knowledge about your AI topic.
+                    </p>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="image" class="text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Infographic</h3>
+                    <p class="text-gray-600 text-sm">
+                        Create a visually compelling infographic summarizing key aspects of your AI concept.
+                    </p>
+                </div>
+                
+                <!-- Project 7 -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="codesandbox" class="text-pink-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Interactive Demo</h3>
+                    <p class="text-gray-600 text-sm">
+                        Build a simple interactive demonstration of an AI algorithm.
+                    </p>
+                </div>
+                
+                <!-- Project 8 -->
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+                    <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mb-4">
+                        <i data-feather="book-open" class="text-teal-600"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Digital Story</h3>
+                    <p class="text-gray-600 text-sm">
+                        Craft a digital storybook explaining your AI concept through narrative.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rubric Section -->
+    <section id="rubric" class="py-16 bg-white relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Assessment Rubric</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white rounded-lg overflow-hidden">
+                    <thead class="gradient-bg text-white">
+                        <tr>
+                            <th class="py-3 px-4 text-left font-medium">Criteria</th>
+                            <th class="py-3 px-4 text-left font-medium">Well Above Standard</th>
+                            <th class="py-3 px-4 text-left font-medium">Above Standard</th>
+                            <th class="py-3 px-4 text-left font-medium">At Standard</th>
+                            <th class="py-3 px-4 text-left font-medium">Approaching Standard</th>
+                            <th class="py-3 px-4 text-left font-medium">Below Standard</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        <tr>
+                            <td class="py-4 px-4 font-medium border-r border-gray-200">AI Literacy</td>
+                            <td class="py-4 px-4 text-sm">Uses AI expertly and strategically to support learning and creation.</td>
+                            <td class="py-4 px-4 text-sm">Uses AI effectively with clear purpose. Shows evidence of editing.</td>
+                            <td class="py-4 px-4 text-sm">Uses AI adequately for research or drafting.</td>
+                            <td class="py-4 px-4 text-sm">Uses AI inconsistently or without purpose.</td>
+                            <td class="py-4 px-4 text-sm">Over-relies on unedited AI content.</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="py-4 px-4 font-medium border-r border-gray-200">Critical Understanding</td>
+                            <td class="py-4 px-4 text-sm">Demonstrates insightful evaluation of AI's responses.</td>
+                            <td class="py-4 px-4 text-sm">Analyses AI output thoughtfully.</td>
+                            <td class="py-4 px-4 text-sm">Describes AI output with some simple evaluative comments.</td>
+                            <td class="py-4 px-4 text-sm">Accepts AI output largely at face value.</td>
+                            <td class="py-4 px-4 text-sm">Shows no evaluation of AI output.</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4 font-medium border-r border-gray-200">Conceptual Understanding</td>
+                            <td class="py-4 px-4 text-sm">Comprehensive and accurate understanding of the concept.</td>
+                            <td class="py-4 px-4 text-sm">Clear and mostly accurate understanding.</td>
+                            <td class="py-4 px-4 text-sm">Basic understanding, explanations mostly correct.</td>
+                            <td class="py-4 px-4 text-sm">Limited or partial understanding.</td>
+                            <td class="py-4 px-4 text-sm">Inaccurate or minimal understanding.</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="py-4 px-4 font-medium border-r border-gray-200">Ethical Reasoning</td>
+                            <td class="py-4 px-4 text-sm">Insightful reflection on ethical use of AI.</td>
+                            <td class="py-4 px-4 text-sm">Thoughtful reflection on how AI was used.</td>
+                            <td class="py-4 px-4 text-sm">Brief mention of ethics or credit.</td>
+                            <td class="py-4 px-4 text-sm">Mentions ethics superficially.</td>
+                            <td class="py-4 px-4 text-sm">No ethical reflection.</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4 font-medium border-r border-gray-200">Judgement and Curation</td>
+                            <td class="py-4 px-4 text-sm">Consistently selects and refines AI outputs with strong discernment.</td>
+                            <td class="py-4 px-4 text-sm">Selects appropriate AI outputs and edits them effectively.</td>
+                            <td class="py-4 px-4 text-sm">Uses AI outputs with some basic editing.</td>
+                            <td class="py-4 px-4 text-sm">Uses AI outputs with minimal editing.</td>
+                            <td class="py-4 px-4 text-sm">Copies AI outputs without evaluation.</td>
+                        </tr>
+                        <tr class="bg-gray-50">
+                            <td class="py-4 px-4 font-medium border-r border-gray-200">Creativity and Integration</td>
+                            <td class="py-4 px-4 text-sm">Creates a highly engaging, original presentation.</td>
+                            <td class="py-4 px-4 text-sm">Clear, well-structured, and engaging presentation.</td>
+                            <td class="py-4 px-4 text-sm">Presentation is clear but predictable.</td>
+                            <td class="py-4 px-4 text-sm">Lacks clear structure or originality.</td>
+                            <td class="py-4 px-4 text-sm">Presentation incomplete or disorganized.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-bg text-white py-16 relative z-10">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold mb-6">Ready to Explore AI Concepts?</h2>
+            <p class="text-xl max-w-2xl mx-auto mb-8 opacity-90">
+                Start creating your digital product today and showcase your understanding of artificial intelligence.
+            </p>
+            <a href="#concepts" class="inline-block px-8 py-3 bg-white text-purple-600 rounded-lg font-medium hover:bg-opacity-90 transition">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 relative z-10">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-xl font-bold">AI Learnium Explorer</h3>
+                    <p class="text-gray-400 mt-1">Logic & Algorithms 2025</p>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="github"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="linkedin"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
+                <p>© 2025 AI Learnium Explorer. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Vanta.js
+        VANTA.GLOBE({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x7d5fff,
+            backgroundColor: 0xf8fafc
+        });
+
+        // Initialize Feather Icons
+        feather.replace();
+
+        // Mobile menu toggle functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        mobileMenuButton.addEventListener('click', function() {
+            // Implement mobile menu toggle logic here
+            alert('Mobile menu would open here in a complete implementation.');
+        });
+    </script>
+</body>
+</html>
