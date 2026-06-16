@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BFS Queue Visualizer</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0f0f13;
+  color: #e2e0d8;
+  font-family: 'Courier New', monospace;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100vh;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: 1px solid #2a2a35;
+  flex-shrink: 0;
+}
+header h1 { font-size: 12px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: #666; }
+#start-label { font-size: 12px; color: #666; }
+#start-label span { color: #a78bfa; font-weight: 700; }
+
+.main { display: flex; flex: 1; overflow: hidden; }
+
+/* Graph */
+#canvas-wrap { flex: 1; position: relative; overflow: hidden; }
+canvas { display: block; }
+
+/* Right panel */
+.panel {
+  width: 300px;
+  border-left: 1px solid #2a2a35;
+  display: flex;
+  flex-direction: column;
+  background: #0c0c10;
+  overflow: hidden;
+}
+
+/* Queue section — the star of the show */
+.queue-section {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid #1e1e28;
+  flex-shrink: 0;
+}
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label .count {
+  background: #1a1a28;
+  border: 1px solid #3a3a50;
+  border-radius: 3px;
+  padding: 1px 6px;
+  color: #a78bfa;
+  font-size: 10px;
+}
+
+/* The queue itself — horizontal, front on left */
+.queue-track {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  min-height: 52px;
+  position: relative;
+}
+.queue-arrows {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 10px;
+  color: #444;
+  letter-spacing: 0.08em;
+  padding: 0 2px;
+}
+.q-node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 0 8px;
+  height: 44px;
+  border-top: 2px solid #3a3a55;
+  border-bottom: 2px solid #3a3a55;
+  border-right: 1px solid #2a2a3a;
+  background: #16162a;
+  font-size: 12px;
+  color: #a78bfa;
+  font-weight: 700;
+  transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+  position: relative;
+}
+.q-node:first-child {
+  border-left: 2px solid #3a3a55;
+  border-radius: 4px 0 0 4px;
+}
+.q-node:last-child {
+  border-right: 2px solid #3a3a55;
+  border-radius: 0 4px 4px 0;
+}
+.q-node:first-child:last-child {
+  border-radius: 4px;
+}
+.q-node.highlight-dequeue {
+  background: #3a1010;
+  border-color: #e05555;
+  color: #f87171;
+}
+.q-node.highlight-enqueue {
+  background: #0f2e1a;
+  border-color: #22863a;
+  color: #4ade80;
+  animation: popIn 0.25s ease;
+}
+@keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.queue-empty { color: #333; font-size: 12px; display: flex; align-items: center; height: 44px; }
+
+/* Operation log — last action */
+.op-log {
+  font-size: 12px;
+  min-height: 20px;
+  color: #666;
+  margin-top: 8px;
+}
+.op-log .deq { color: #f87171; }
+.op-log .enq { color: #4ade80; }
+.op-log .bold { font-weight: 700; }
+
+/* Visited */
+.visited-section {
+  padding: 12px 16px;
+  border-bottom: 1px solid #1e1e28;
+  flex-shrink: 0;
+}
+#visited-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  min-height: 24px;
+}
+.v-badge {
+  border-radius: 3px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.lc0{background:#2d1f5e;color:#c4b5fd} .lc1{background:#1e3a2e;color:#4ade80}
+.lc2{background:#3a2210;color:#fb923c} .lc3{background:#1a2e3a;color:#38bdf8}
+.lc4{background:#3a1a2a;color:#f472b6} .lc5{background:#2a2a10;color:#facc15}
+.lc6{background:#1a3a3a;color:#34d399}
+
+/* Step log */
+#log {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: #444;
+}
+.log-entry { display: flex; gap: 6px; align-items: baseline; }
+.log-entry .step { color: #333; min-width: 22px; font-size: 10px; }
+.log-entry .msg { color: #666; }
+.log-entry.active .msg { color: #c4b5fd; }
+.log-entry .tag { border-radius: 2px; padding: 0 5px; font-size: 10px; font-weight: 700; }
+.tag-deq { background:#3a1010; color:#f87171; }
+.tag-enq { background:#0f2e1a; color:#4ade80; }
+.tag-done { background:#1a2a1a; color:#4ade80; }
+.tag-visit { background:#2d1f5e; color:#c4b5fd; }
+
+/* Controls */
+.controls {
+  padding: 12px 16px;
+  border-top: 1px solid #1e1e28;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.btn { width:100%; padding:10px; border:none; border-radius:5px; font-family:'Courier New',monospace; font-size:12px; letter-spacing:0.05em; cursor:pointer; transition:all 0.15s; }
+.btn-primary { background:#5b3fd4; color:#fff; font-weight:700; }
+.btn-primary:hover:not(:disabled) { background:#6d4fe0; }
+.btn-primary:disabled { background:#1a1228; color:#4a3a6a; cursor:not-allowed; }
+.btn-secondary { background:#1a1a24; color:#666; border:1px solid #2a2a38; }
+.btn-secondary:hover { background:#22222e; color:#aaa; }
+
+/* Picker */
+#picker { position:fixed; inset:0; background:rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; z-index:100; }
+#picker.hidden { display:none; }
+.picker-box { background:#12121a; border:1px solid #2e2e40; border-radius:12px; padding:24px 28px; max-width:400px; width:90%; }
+.picker-box h2 { font-size:13px; font-weight:400; color:#777; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px; }
+.picker-box p { font-size:11px; color:#444; margin-bottom:16px; }
+.node-grid { display:flex; flex-wrap:wrap; gap:7px; }
+.node-btn { background:#1a1a28; border:1px solid #3a3a55; border-radius:4px; padding:6px 12px; color:#a78bfa; font-family:'Courier New',monospace; font-size:12px; cursor:pointer; transition:all 0.15s; }
+.node-btn:hover { background:#2d1f5e; border-color:#6d4fe0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>BFS — Queue Visualizer</h1>
+  <div id="start-label">Start: <span id="start-name">—</span></div>
+</header>
+
+<div class="main">
+  <div id="canvas-wrap"><canvas id="g"></canvas></div>
+
+  <div class="panel">
+
+    <!-- Queue -->
+    <div class="queue-section">
+      <div class="section-label">
+        Queue <span class="count" id="q-count">0</span>
+        <span style="color:#333;font-size:10px">← front &nbsp;&nbsp; back →</span>
+      </div>
+      <div class="queue-arrows">
+        <span>DEQUEUE</span><span>ENQUEUE</span>
+      </div>
+      <div class="queue-track" id="queue-track">
+        <div class="queue-empty">empty</div>
+      </div>
+      <div class="op-log" id="op-log">&nbsp;</div>
+    </div>
+
+    <!-- Visited -->
+    <div class="visited-section">
+      <div class="section-label">Visited <span class="count" id="v-count">0</span></div>
+      <div id="visited-flow"></div>
+    </div>
+
+    <!-- Log -->
+    <div id="log"></div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button class="btn btn-primary" id="btn-next" disabled>Next step →</button>
+      <button class="btn btn-secondary" id="btn-reset">Choose new start node</button>
+    </div>
+  </div>
+</div>
+
+<!-- Picker -->
+<div id="picker">
+  <div class="picker-box">
+    <h2>Choose start node</h2>
+    <p>BFS will explore from here, one dequeue/enqueue at a time.</p>
+    <div class="node-grid" id="node-grid"></div>
+  </div>
+</div>
+
+<script>
+const graph = {
+  Alice:["Bob","Carol","Diana"],Bob:["Alice","Eve","Frank"],Carol:["Alice","Grace","Hank"],
+  Diana:["Alice","Ivan"],Eve:["Bob","Jack"],Frank:["Bob","Lena","Mia"],
+  Grace:["Carol","Noah"],Hank:["Carol","Olivia","Pete"],Ivan:["Diana","Quinn"],
+  Jack:["Eve","Rachel"],Lena:["Frank","Sam"],Mia:["Frank","Tom"],
+  Noah:["Grace","Sam"],Olivia:["Hank","Tom"],Pete:["Hank","Quinn"],
+  Quinn:["Ivan","Pete","Rachel"],Rachel:["Jack","Quinn"],Sam:["Lena","Noah"],
+  Tom:["Mia","Olivia"],Uma:["Zoe"],Zoe:["Uma"]
+};
+const names = Object.keys(graph);
+
+const LEVEL_COLORS = [
+  {fill:'#2d1f5e',stroke:'#7c5dd8',text:'#c4b5fd'},
+  {fill:'#1e3a2e',stroke:'#22863a',text:'#4ade80'},
+  {fill:'#3a2210',stroke:'#c2622d',text:'#fb923c'},
+  {fill:'#1a2e3a',stroke:'#1d6fa5',text:'#38bdf8'},
+  {fill:'#3a1a2a',stroke:'#b83280',text:'#f472b6'},
+  {fill:'#2a2a10',stroke:'#a16207',text:'#facc15'},
+  {fill:'#1a3a3a',stroke:'#0f766e',text:'#34d399'},
+];
+const DEFAULT = {fill:'#1a1a24',stroke:'#3a3a50',text:'#555'};
+const CURRENT_COLOR = {fill:'#fff',stroke:'#fff',text:'#111'};
+
+const canvas = document.getElementById('g');
+const ctx = canvas.getContext('2d');
+const pos = {};
+
+function layoutGraph() {
+  const W=canvas.width, H=canvas.height;
+  const main=names.filter(n=>!['Uma','Zoe'].includes(n));
+  main.forEach((n,i)=>{
+    const a=(2*Math.PI*i/main.length)-Math.PI/2;
+    pos[n]={x:W/2-30+Math.cos(a)*Math.min(W,H)*0.33, y:H/2+Math.sin(a)*Math.min(W,H)*0.36, vx:0, vy:0};
+  });
+  pos.Uma={x:W-70,y:H-55,vx:0,vy:0};
+  pos.Zoe={x:W-25,y:H-25,vx:0,vy:0};
+  for(let s=0;s<400;s++){
+    names.forEach(a=>names.forEach(b=>{
+      if(a===b)return;
+      const dx=pos[a].x-pos[b].x,dy=pos[a].y-pos[b].y,d=Math.sqrt(dx*dx+dy*dy)||1;
+      const f=4800/(d*d);
+      pos[a].vx+=dx/d*f*0.5; pos[a].vy+=dy/d*f*0.5;
+    }));
+    names.forEach(a=>graph[a].forEach(b=>{
+      const dx=pos[b].x-pos[a].x,dy=pos[b].y-pos[a].y,d=Math.sqrt(dx*dx+dy*dy)||1;
+      const f=(d-95)/18;
+      pos[a].vx+=dx/d*f; pos[a].vy+=dy/d*f;
+      pos[b].vx-=dx/d*f; pos[b].vy-=dy/d*f;
+    }));
+    main.forEach(n=>{pos[n].vx+=(W/2-30-pos[n].x)*0.008;pos[n].vy+=(H/2-pos[n].y)*0.008;});
+    pos.Uma.vx+=(W-70-pos.Uma.x)*0.3; pos.Uma.vy+=(H-55-pos.Uma.y)*0.3;
+    pos.Zoe.vx+=(W-25-pos.Zoe.x)*0.3; pos.Zoe.vy+=(H-25-pos.Zoe.y)*0.3;
+    names.forEach(n=>{
+      pos[n].vx*=0.8; pos[n].vy*=0.8;
+      pos[n].x=Math.max(28,Math.min(W-28,pos[n].x+pos[n].vx));
+      pos[n].y=Math.max(20,Math.min(H-20,pos[n].y+pos[n].vy));
+    });
+  }
+}
+
+// BFS state machine
+// Each "step" is one meaningful operation:
+//   - Enqueue start node
+//   - Dequeue node, then enqueue all unvisited neighbors (one combined step per dequeue)
+let bfs = null;
+
+function initBFS(root) {
+  bfs = {
+    root,
+    queue: [root],          // current queue contents
+    visited: new Set([root]),
+    nodeLevel: {[root]: 0},
+    treeEdges: new Set(),
+    currentNode: null,      // node just dequeued (highlighted white on graph)
+    newlyEnqueued: [],      // nodes just added (highlighted green in queue)
+    stepCount: 0,
+    done: false,
+    visitOrder: [root],
+  };
+  document.getElementById('start-name').textContent = root;
+  document.getElementById('btn-next').disabled = false;
+  clearLog();
+  addLog(`Enqueue <span class="tag tag-enq">${root}</span> — start node`, true);
+  updateQueue([], [root]);
+  updateVisited();
+  draw();
+}
+
+function stepBFS() {
+  if (!bfs || bfs.done) return;
+  bfs.stepCount++;
+
+  // Dequeue front
+  const node = bfs.queue.shift();
+  bfs.currentNode = node;
+  const level = bfs.nodeLevel[node];
+
+  // Find unvisited neighbors → enqueue
+  const toEnqueue = [];
+  graph[node].forEach(nb => {
+    if (!bfs.visited.has(nb)) {
+      bfs.visited.add(nb);
+      bfs.queue.push(nb);
+      bfs.nodeLevel[nb] = level + 1;
+      bfs.treeEdges.add([node,nb].sort().join('|'));
+      toEnqueue.push(nb);
+      bfs.visitOrder.push(nb);
+    }
+  });
+  bfs.newlyEnqueued = toEnqueue;
+
+  // Build log message
+  let msg = `<span class="tag tag-deq">DEQUEUE</span> <span class="bold" style="color:#f87171">${node}</span>`;
+  if (toEnqueue.length > 0) {
+    msg += ` → <span class="tag tag-enq">ENQUEUE</span> <span style="color:#4ade80">${toEnqueue.join(', ')}</span>`;
+  } else {
+    msg += ` → no new neighbors`;
+  }
+  addLog(msg, true);
+  updateOpLog(node, toEnqueue);
+  updateQueue(bfs.newlyEnqueued);
+  updateVisited();
+
+  if (bfs.queue.length === 0) {
+    bfs.done = true;
+    bfs.currentNode = null;
+    document.getElementById('btn-next').disabled = true;
+    const unreachable = names.filter(n => !bfs.visited.has(n));
+    if (unreachable.length > 0) {
+      addLog(`<span class="tag tag-done">DONE</span> Unreachable: ${unreachable.join(', ')}`, false);
+    } else {
+      addLog(`<span class="tag tag-done">DONE</span> All nodes visited`, false);
+    }
+    draw();
+  } else {
+    draw();
+  }
+}
+
+function updateOpLog(dequeued, enqueued) {
+  const el = document.getElementById('op-log');
+  if (enqueued.length > 0) {
+    el.innerHTML = `<span class="deq">−</span> <span class="deq bold">${dequeued}</span> &nbsp;|&nbsp; <span class="enq">+</span> <span class="enq bold">${enqueued.join(', ')}</span>`;
+  } else {
+    el.innerHTML = `<span class="deq">−</span> <span class="deq bold">${dequeued}</span> &nbsp; (no new neighbors)`;
+  }
+}
+
+function updateQueue(newlyEnqueued = []) {
+  const track = document.getElementById('queue-track');
+  document.getElementById('q-count').textContent = bfs ? bfs.queue.length : 0;
+
+  if (!bfs || bfs.queue.length === 0) {
+    track.innerHTML = '<div class="queue-empty">empty</div>';
+    return;
+  }
+
+  track.innerHTML = bfs.queue.map((n, i) => {
+    const isNew = newlyEnqueued.includes(n);
+    const cls = isNew ? 'q-node highlight-enqueue' : 'q-node';
+    return `<div class="${cls}">${n}</div>`;
+  }).join('');
+}
+
+function updateVisited() {
+  const el = document.getElementById('visited-flow');
+  document.getElementById('v-count').textContent = bfs ? bfs.visitOrder.length : 0;
+  if (!bfs) { el.innerHTML = ''; return; }
+  el.innerHTML = bfs.visitOrder.map(n => {
+    const lv = bfs.nodeLevel[n] ?? 0;
+    return `<span class="v-badge lc${lv % 7}">${n}</span>`;
+  }).join('');
+}
+
+let stepNum = 0;
+function clearLog() { document.getElementById('log').innerHTML = ''; stepNum = 0; }
+function addLog(msg, isStep) {
+  const el = document.getElementById('log');
+  stepNum++;
+  const d = document.createElement('div');
+  d.className = 'log-entry' + (isStep ? ' active' : '');
+  d.innerHTML = `<span class="step">${isStep ? stepNum : ''}</span><span class="msg">${msg}</span>`;
+  el.appendChild(d);
+  // Fade out previous active
+  el.querySelectorAll('.log-entry.active').forEach((e,_,arr) => {
+    if (e !== arr[arr.length-1]) e.classList.remove('active');
+  });
+  el.scrollTop = el.scrollHeight;
+}
+
+function draw() {
+  const W=canvas.width, H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  if (!pos[names[0]]) return;
+
+  const drawn = new Set();
+  names.forEach(a => graph[a].forEach(b => {
+    const key = [a,b].sort().join('|');
+    if (drawn.has(key)) return; drawn.add(key);
+    const isTree = bfs && bfs.treeEdges.has(key);
+    const isCurrent = bfs && (a===bfs.currentNode || b===bfs.currentNode);
+    ctx.beginPath();
+    ctx.moveTo(pos[a].x, pos[a].y);
+    ctx.lineTo(pos[b].x, pos[b].y);
+    if (isTree && isCurrent) {
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+    } else if (isTree) {
+      ctx.strokeStyle = '#5b3fd4'; ctx.lineWidth = 1.5;
+    } else {
+      ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.lineWidth = 1;
+    }
+    ctx.stroke();
+  }));
+
+  const R = 13;
+  names.forEach(n => {
+    const isCurrent = bfs && n === bfs.currentNode;
+    const isInQueue = bfs && bfs.queue.includes(n);
+    const isNewEnq = bfs && bfs.newlyEnqueued.includes(n);
+    const lv = bfs ? (bfs.nodeLevel[n] ?? -1) : -1;
+    let c = lv >= 0 ? LEVEL_COLORS[lv % LEVEL_COLORS.length] : DEFAULT;
+    if (isCurrent) c = CURRENT_COLOR;
+
+    ctx.beginPath();
+    ctx.arc(pos[n].x, pos[n].y, R, 0, Math.PI*2);
+    ctx.fillStyle = c.fill;
+    ctx.fill();
+
+    if (isCurrent) {
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2.5;
+    } else if (isNewEnq) {
+      ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2.5;
+    } else if (isInQueue) {
+      ctx.strokeStyle = '#a78bfa'; ctx.lineWidth = 1.5;
+    } else {
+      ctx.strokeStyle = c.stroke; ctx.lineWidth = 1.2;
+    }
+    ctx.stroke();
+
+    // Queue indicator ring
+    if (isInQueue && !isCurrent) {
+      ctx.beginPath();
+      ctx.arc(pos[n].x, pos[n].y, R+5, 0, Math.PI*2);
+      ctx.strokeStyle = 'rgba(167,139,250,0.25)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    ctx.font = `${isCurrent?700:lv>=0?600:400} 11px 'Courier New', monospace`;
+    ctx.fillStyle = c.text;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(n, pos[n].x, pos[n].y);
+  });
+
+  // Legend
+  ctx.font = '10px "Courier New", monospace';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+  const items = [
+    {color:'#fff', label:'processing'},
+    {color:'#4ade80', label:'just enqueued'},
+    {color:'#a78bfa', label:'in queue'},
+    {color:'#5b3fd4', label:'tree edge'},
+  ];
+  items.forEach((it,i)=>{
+    ctx.fillStyle = it.color;
+    ctx.fillRect(12, 12+i*16, 8, 8);
+    ctx.fillStyle = '#444';
+    ctx.fillText(it.label, 24, 11+i*16);
+  });
+}
+
+function resize() {
+  const wrap = document.getElementById('canvas-wrap');
+  canvas.width = wrap.clientWidth;
+  canvas.height = wrap.clientHeight;
+  layoutGraph();
+  draw();
+}
+
+function showPicker() {
+  bfs = null;
+  document.getElementById('start-name').textContent = '—';
+  document.getElementById('btn-next').disabled = true;
+  document.getElementById('q-count').textContent = '0';
+  document.getElementById('v-count').textContent = '0';
+  document.getElementById('queue-track').innerHTML = '<div class="queue-empty">empty</div>';
+  document.getElementById('visited-flow').innerHTML = '';
+  document.getElementById('op-log').innerHTML = '&nbsp;';
+  clearLog();
+  draw();
+  const grid = document.getElementById('node-grid');
+  grid.innerHTML = names.map(n=>`<button class="node-btn" onclick="pickNode('${n}')">${n}</button>`).join('');
+  document.getElementById('picker').classList.remove('hidden');
+}
+
+window.pickNode = function(n) {
+  document.getElementById('picker').classList.add('hidden');
+  initBFS(n);
+};
+
+document.getElementById('btn-next').onclick = stepBFS;
+document.getElementById('btn-reset').onclick = showPicker;
+
+// Keyboard support
+document.addEventListener('keydown', e => {
+  if (e.key === ' ' || e.key === 'ArrowRight') { e.preventDefault(); stepBFS(); }
+});
+
+window.addEventListener('resize', resize);
+resize();
+setTimeout(showPicker, 100);
+</script>
+</body>
+</html>
