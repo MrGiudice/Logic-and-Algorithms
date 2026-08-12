@@ -48,22 +48,28 @@
 
         const files = await res.json();
 
-        const pages = files
+        const items = files
           .filter(item =>
             item.type === "file" &&
-            item.name.toLowerCase().endsWith(".html") &&
+            (item.name.toLowerCase().endsWith(".html") || item.name.toLowerCase().endsWith(".md")) &&
             item.name.toLowerCase() !== "index.html"
           )
           .sort((a, b) => a.name.localeCompare(b.name));
 
-        if (pages.length === 0) {
-          tocEl.innerHTML = "<p class='muted'>No additional HTML pages found.</p>";
+        if (items.length === 0) {
+          tocEl.innerHTML = "<p class='muted'>No additional HTML or Markdown files found.</p>";
           return;
         }
 
         tocEl.innerHTML = `
           <ul>
-            ${pages.map(p => `<li><a href="./${p.name}">${p.name}</a></li>`).join("")}
+            ${items.map(file => {
+              const isHtml = file.name.toLowerCase().endsWith(".html");
+              const href = isHtml
+                ? `./${file.name}`
+                : `https://github.com/${owner}/${repo}/blob/${branch}/${file.path}`;
+              return `<li><a href="${href}" target="${isHtml ? "_self" : "_blank"}" rel="noopener">${file.name}</a></li>`;
+            }).join("")}
           </ul>
         `;
       } catch (err) {
