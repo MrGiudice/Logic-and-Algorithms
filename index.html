@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Learnium Explorer</title>
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
@@ -30,7 +30,7 @@
 </head>
 <body class="min-h-screen bg-gray-50 font-sans">
     <div id="vanta-bg"></div>
-    
+
     <!-- Header -->
     <header class="gradient-bg text-white shadow-lg">
         <div class="container mx-auto px-6 py-8 relative z-10">
@@ -43,8 +43,9 @@
                     <a href="#concepts" class="px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition">Key Concepts</a>
                     <a href="#projects" class="px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition">Projects</a>
                     <a href="#rubric" class="px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition">Rubric</a>
+                    <a href="#toc" class="px-4 py-2 rounded-lg hover:bg-white hover:bg-opacity-20 transition">Other Pages</a>
                 </div>
-                <button class="md:hidden" id="mobile-menu-button">
+                <button class="md:hidden" id="mobile-menu-button" aria-label="Open mobile menu">
                     <i data-feather="menu"></i>
                 </button>
             </div>
@@ -81,7 +82,7 @@
                     </p>
                     <a href="#" class="text-purple-600 font-medium hover:underline">Learn more →</a>
                 </div>
-                
+
                 <!-- Concept Card 2 -->
                 <div class="concept-card bg-white p-6 rounded-xl shadow-md border border-gray-100 transition duration-300">
                     <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center mb-4">
@@ -93,11 +94,11 @@
                     </p>
                     <a href="#" class="text-blue-600 font-medium hover:underline">Learn more →</a>
                 </div>
-                
+
                 <!-- Concept Card 3 -->
                 <div class="concept-card bg-white p-6 rounded-xl shadow-md border border-gray-100 transition duration-300">
                     <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                        <i data-feather="brain" class="text-green-600"></i>
+                        <i data-feather="activity" class="text-green-600"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Philosophy of Mind</h3>
                     <p class="text-gray-600 mb-4">
@@ -105,7 +106,7 @@
                     </p>
                     <a href="#" class="text-green-600 font-medium hover:underline">Learn more →</a>
                 </div>
-                
+
                 <!-- Concept Card 4 -->
                 <div class="concept-card bg-white p-6 rounded-xl shadow-md border border-gray-100 transition duration-300">
                     <div class="w-14 h-14 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
@@ -117,11 +118,11 @@
                     </p>
                     <a href="#" class="text-yellow-600 font-medium hover:underline">Learn more →</a>
                 </div>
-                
+
                 <!-- Concept Card 5 -->
                 <div class="concept-card bg-white p-6 rounded-xl shadow-md border border-gray-100 transition duration-300">
                     <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mb-4">
-                        <i data-feather="activity" class="text-red-600"></i>
+                        <i data-feather="cpu" class="text-red-600"></i>
                     </div>
                     <h3 class="text-xl font-bold text-gray-800 mb-2">Machine Learning</h3>
                     <p class="text-gray-600 mb-4">
@@ -148,7 +149,7 @@
                         Create an interactive mobile application that teaches an AI concept through engaging activities.
                     </p>
                 </div>
-                
+
                 <!-- Project 2 -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
                     <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
@@ -159,7 +160,7 @@
                         Design an informative website explaining your chosen AI concept with interactive elements.
                     </p>
                 </div>
-                
+
                 <!-- Project 3 -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
                     <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
@@ -170,7 +171,7 @@
                         Record a podcast episode interviewing experts or discussing applications of your AI topic.
                     </p>
                 </div>
-                
+
                 <!-- Project 4 -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
                     <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
@@ -181,7 +182,7 @@
                         Produce an educational video explaining your AI concept with animations and examples.
                     </p>
                 </div>
-                
+
                 <!-- Project 5 -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
                     <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4">
@@ -192,7 +193,7 @@
                         Develop a quiz or game that tests knowledge about your AI topic.
                     </p>
                 </div>
-                
+
                 <!-- Project 6 -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
                     <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mb-4">
@@ -203,7 +204,7 @@
                         Create a visually compelling infographic summarizing key aspects of your AI concept.
                     </p>
                 </div>
-                
+
                 <!-- Project 7 -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
                     <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mb-4">
@@ -214,7 +215,7 @@
                         Build a simple interactive demonstration of an AI algorithm.
                     </p>
                 </div>
-                
+
                 <!-- Project 8 -->
                 <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
                     <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mb-4">
@@ -226,6 +227,19 @@
                     </p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Auto TOC Section -->
+    <section id="toc" class="py-16 bg-white relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Other Pages in This Repo</h2>
+            <div id="repo-toc" class="max-w-2xl mx-auto bg-gray-50 border border-gray-200 rounded-xl p-6">
+                <p class="text-gray-500">Loading pages...</p>
+            </div>
+            <p class="text-sm text-gray-500 text-center mt-4">
+                This list is automatically generated from <code>.html</code> files in the repository root.
+            </p>
         </div>
     </section>
 
@@ -320,9 +334,9 @@
                     <p class="text-gray-400 mt-1">Logic & Algorithms 2025</p>
                 </div>
                 <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="github"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="twitter"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white transition"><i data-feather="linkedin"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition" aria-label="GitHub"><i data-feather="github"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition" aria-label="Twitter"><i data-feather="twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn"><i data-feather="linkedin"></i></a>
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400 text-sm">
@@ -332,16 +346,16 @@
     </footer>
 
     <script>
-        // Initialize Vanta.js
+        // Initialize Vanta.js background
         VANTA.GLOBE({
             el: "#vanta-bg",
             mouseControls: true,
             touchControls: true,
             gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
+            minHeight: 200.0,
+            minWidth: 200.0,
+            scale: 1.0,
+            scaleMobile: 1.0,
             color: 0x7d5fff,
             backgroundColor: 0xf8fafc
         });
@@ -349,12 +363,73 @@
         // Initialize Feather Icons
         feather.replace();
 
-        // Mobile menu toggle functionality
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        mobileMenuButton.addEventListener('click', function() {
-            // Implement mobile menu toggle logic here
-            alert('Mobile menu would open here in a complete implementation.');
-        });
+        // Mobile menu toggle functionality (placeholder)
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener("click", function () {
+                alert("Mobile menu would open here in a complete implementation.");
+            });
+        }
+
+        // Auto-generate TOC for other HTML files in repo root
+        async function loadRepoTOC() {
+            const owner = "MrGiudice";
+            const repo = "Logic-and-Algorithms";
+            const branch = "main";
+            const tocEl = document.getElementById("repo-toc");
+
+            if (!tocEl) return;
+
+            try {
+                const endpoint = `https://api.github.com/repos/${owner}/${repo}/contents/?ref=${branch}`;
+                const res = await fetch(endpoint);
+
+                if (!res.ok) {
+                    throw new Error(`GitHub API error: ${res.status}`);
+                }
+
+                const files = await res.json();
+
+                const htmlPages = files
+                    .filter(
+                        (item) =>
+                            item.type === "file" &&
+                            item.name.toLowerCase().endsWith(".html") &&
+                            item.name.toLowerCase() !== "index.html"
+                    )
+                    .sort((a, b) => a.name.localeCompare(b.name));
+
+                if (htmlPages.length === 0) {
+                    tocEl.innerHTML = `<p class="text-gray-600">No additional HTML pages found in the repository root.</p>`;
+                    return;
+                }
+
+                tocEl.innerHTML = `
+                    <ul class="space-y-3">
+                        ${htmlPages
+                            .map((page) => {
+                                const label = page.name.replace(/\.html$/i, "");
+                                return `
+                                    <li class="flex items-center justify-between gap-4 bg-white rounded-lg p-3 border border-gray-200">
+                                        <a class="text-purple-700 hover:underline font-medium" href="./${page.name}">
+                                            ${label}
+                                        </a>
+                                        <span class="text-gray-400 text-sm">${page.name}</span>
+                                    </li>
+                                `;
+                            })
+                            .join("")}
+                    </ul>
+                `;
+            } catch (error) {
+                tocEl.innerHTML = `
+                    <div class="text-red-600 font-medium">Could not load table of contents automatically.</div>
+                    <div class="text-sm text-gray-500 mt-2">${error.message}</div>
+                `;
+            }
+        }
+
+        loadRepoTOC();
     </script>
 </body>
 </html>
