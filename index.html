@@ -51,7 +51,7 @@
         const items = files
           .filter(item =>
             item.type === "file" &&
-            (item.name.toLowerCase().endsWith(".html") || item.name.toLowerCase().endsWith(".md")) &&
+            (item.name.toLowerCase().endsWith(".html") ) &&
             item.name.toLowerCase() !== "index.html"
           )
           .sort((a, b) => a.name.localeCompare(b.name));
