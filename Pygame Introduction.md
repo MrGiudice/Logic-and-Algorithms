@@ -1,3 +1,5 @@
+---
+---
 # Pygame Introduction
 
 Copy, paste and run this code:
