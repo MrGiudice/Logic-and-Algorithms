@@ -43,16 +43,17 @@ while running:
 pygame.quit()
 ````
 
-1. What change do you need to make to have the:
-    1. screen open at a different size?
-    2. player rectangle start in a different position on the screen?
-    3. square move faster or slower?
-    4. player rectangle bigger or smaller?
-    1. to change the colour of the background? *(Colours are given as R, G, B out of 255 — for example, 255, 0, 0 is red.)*
-    1. make to change the colour of the player rectangle?
-    1. make to change the window title from "Move the square" to something else?
-    1. to make so the square moves using A, D, W, S instead of the arrow keys?
-    1. player rectangle be a circle *(read docs https://www.pygame.org/docs/ref/draw.html)*
+1. What change do you need to make to:
+    1. have the screen open at a different size?
+    2. have the player rectangle start in a different position on the screen?
+    3. make the square move faster or slower?
+    4. make the player rectangle bigger or smaller?
+    5. change the colour of the background? *(Colours are given as R, G, B out of 255 — for example, 255, 0, 0 is red.)*
+    6. change the colour of the player rectangle?
+    7. change the window title from "Move the square" to something else?
+    8. make the square move using A, D, W, S instead of the arrow keys?
+    9. make the player rectangle a circle? *(read docs https://www.pygame.org/docs/ref/draw.html)*
+    2. Create a variable called `colour` at the top of the code, and use it to set the player rectangle's colour — instead of writing the RGB tuple directly in the `draw.rect` call.
 
 2. Keep the player on screen (boundary clamping)
    
@@ -62,7 +63,7 @@ pygame.quit()
    1. Evaluate  max(0, min(-50, 800 - 50))
    1. Evaluate  max(0, min(900, 800 - 50))
    1. Write an assignment (e.g. x = ... ) so  that x stays between 0 and 750
-   2. update your code so that the player can't leave the screen
+   2. Update your code so that the player can't leave the screen
 
 3. pygame.Rect is a built-in helper object for representing rectangles
 
