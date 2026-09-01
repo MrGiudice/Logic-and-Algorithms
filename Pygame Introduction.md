@@ -1,6 +1,6 @@
 ---
+title: Pygame Introduction
 ---
-# Pygame Introduction
 
 Copy, paste and run this code:
 
