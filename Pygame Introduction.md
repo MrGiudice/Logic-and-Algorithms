@@ -73,46 +73,46 @@ pygame.quit()
 
    Copy, paste and run this code:
 
-    ```python
-    import pygame
-    
-    # --- Setup ---
-    pygame.init()
-    screen = pygame.display.set_mode((800, 600))
-    pygame.display.set_caption("Move the square")
-    clock = pygame.time.Clock()
-    
-    # Player state — now a Rect instead of separate x, y
-    player_rect = pygame.Rect(400, 300, 50, 50)  # left, top, width, height
-    speed = 300  # pixels per second
-    
-    running = True
-    while running:
-        # 1. Handle events (quitting, key presses, etc.)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-    
-        # 2. Update state based on which keys are currently held
-        keys = pygame.key.get_pressed()
-        dt = clock.tick(60) / 1000  # seconds since last frame
-    
-        if keys[pygame.K_LEFT]:
-            player_rect.x -= speed * dt
-        if keys[pygame.K_RIGHT]:
-            player_rect.x += speed * dt
-        if keys[pygame.K_UP]:
-            player_rect.y -= speed * dt
-        if keys[pygame.K_DOWN]:
-            player_rect.y += speed * dt
-    
-        # 3. Draw everything
-        screen.fill((30, 30, 30))  # clear screen (dark grey)
-        pygame.draw.rect(screen, (100, 200, 255), player_rect)  # our "player"
-        pygame.display.flip()  # show what we drew
-    
-    pygame.quit()
-    ````
+   ```python
+   import pygame
+   
+   # --- Setup ---
+   pygame.init()
+   screen = pygame.display.set_mode((800, 600))
+   pygame.display.set_caption("Move the square")
+   clock = pygame.time.Clock()
+   
+   # Player state — now a Rect instead of separate x, y
+   player_rect = pygame.Rect(400, 300, 50, 50)  # left, top, width, height
+   speed = 300  # pixels per second
+   
+   running = True
+   while running:
+       # 1. Handle events (quitting, key presses, etc.)
+       for event in pygame.event.get():
+           if event.type == pygame.QUIT:
+               running = False
+   
+       # 2. Update state based on which keys are currently held
+       keys = pygame.key.get_pressed()
+       dt = clock.tick(60) / 1000  # seconds since last frame
+   
+       if keys[pygame.K_LEFT]:
+           player_rect.x -= speed * dt
+       if keys[pygame.K_RIGHT]:
+           player_rect.x += speed * dt
+       if keys[pygame.K_UP]:
+           player_rect.y -= speed * dt
+       if keys[pygame.K_DOWN]:
+           player_rect.y += speed * dt
+   
+       # 3. Draw everything
+       screen.fill((30, 30, 30))  # clear screen (dark grey)
+       pygame.draw.rect(screen, (100, 200, 255), player_rect)  # our "player"
+       pygame.display.flip()  # show what we drew
+   
+   pygame.quit()
+   ```
 
     We created player_rect which has coordinates (player_rect.x, player_rect.y)
     1. Add the boundary clamping code
