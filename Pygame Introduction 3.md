@@ -2,7 +2,7 @@
 title: Pygame Introduction 3
 ---
 
-## 1. Add Gravity
+## Add Gravity
 
 Add this to your setup:
 
@@ -25,3 +25,7 @@ if player_rect.y > 600 - player_rect.h:  # hit the ground
     player_rect.y = 600 - player_rect.h
     vy = 0
 ```
+
+## Make a game
+Make a game.  You should be able to make either a *Flappy Bird* type game or a *Geometry Dash* type game.
+
