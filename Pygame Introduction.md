@@ -176,7 +176,7 @@ pygame.quit()
    pygame.quit()
    ```
 
-   1. Before the game loop, load your image into a variable using `pygame.image.load("player.png").convert_alpha()`. *(`.convert_alpha()` makes the image draw faster and keeps any transparent background working correctly.)*
+   1. Before the game loop, load your image into a variable using `pygame.image.load("player.png").convert_alpha()`. 
    2. Replace the `pygame.draw.rect(...)` line with `screen.blit(your_image_variable, player_rect)` — `blit` is pygame's word for "draw this image onto the screen at this position."
    3. Run it. If the image doesn't appear, check the filename in your code matches the actual file exactly, including the `.png` at the end.
    4. `player_rect` is still `50 × 50`, no matter what size your actual image file is. What happens if your image isn't 50 × 50 pixels — does it look stretched, squashed, or cut off?
