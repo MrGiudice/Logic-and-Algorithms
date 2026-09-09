@@ -3,7 +3,7 @@ title: Pygame Introduction 2
 ---
 ## 1. Make the target move 
 
-1. Make the target drop from the top of the screen
+1. Make the target drop from the top of the screen.  Hint: Modify `player_rect.y += speed * dt` to suit your target
 2. Make the target start at the top when it reaches the bottom
 3. Make the target start at a random x value
 
